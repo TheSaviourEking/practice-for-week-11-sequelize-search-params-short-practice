@@ -57,6 +57,8 @@ app.get('/musicians', async (req, res, next) => {
     // End result: { include: [{ model: Band, where: { name: req.query.bandName } }] }
 
     // Your code here
+    const bandName = req.query.bandName ? req.query.bandName : null;
+    if (bandName) query.include.push({ model: Band, where: { name: bandName } });
 
 
     // STEP 3: WHERE Clauses on the associated Instrument model 
