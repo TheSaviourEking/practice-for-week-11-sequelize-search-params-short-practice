@@ -58,7 +58,10 @@ app.get('/musicians', async (req, res, next) => {
 
     // Your code here
     const bandName = req.query.bandName ? req.query.bandName : null;
-    if (bandName) query.include.push({ model: Band, where: { name: bandName } });
+    if (bandName) query.include.push({
+        model: Band,
+        where: { name: bandName }
+    });
 
 
     // STEP 3: WHERE Clauses on the associated Instrument model 
@@ -97,7 +100,6 @@ app.get('/musicians', async (req, res, next) => {
     // Your code here
     const musicianFields = req.query.musicianFields ? req.query.musicianFields : null;
     if (musicianFields) query.attributes = [...musicianFields];
-    console.log(musicianFields)
 
 
     // BONUS STEP 5: Specify attributes to be returned
@@ -119,6 +121,17 @@ app.get('/musicians', async (req, res, next) => {
             }]
         }
     */
+    const bandFields = req.query.bandFields ? req.query.bandFields : null;
+    const band = query.include.find(band => band.model === Band);
+    if (bandFields && bandFields[0] !== 'all') {
+        band.attributes = bandFields;
+    }
+
+    const instrumentFields = req.query.instrumentFields ? req.query.instrumentFields : null;
+    const instrument = query.include.find(instrument => instrument.model === Instrument);
+    if (instrumentFields?.[0] !== 'all') {
+        instrument.attributes = instrumentFields;
+    }
 
 
     // BONUS STEP 6: Order Options
