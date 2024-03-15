@@ -77,6 +77,12 @@ app.get('/musicians', async (req, res, next) => {
     */
 
     // Your code here
+    const instrumentTypes = req.query.instrumentTypes ? req.query.instrumentTypes : null;
+    if (instrumentTypes) query.include.push({
+        model: Instrument,
+        where: { type: instrumentTypes },
+        through: { attributes: [] }
+    })
 
 
     // BONUS STEP 4: Specify Musician attributes to be returned
