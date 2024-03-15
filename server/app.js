@@ -95,6 +95,9 @@ app.get('/musicians', async (req, res, next) => {
     // If any other attributes are provided, only include those values
 
     // Your code here
+    const musicianFields = req.query.musicianFields ? req.query.musicianFields : null;
+    if (musicianFields) query.attributes = [...musicianFields];
+    console.log(musicianFields)
 
 
     // BONUS STEP 5: Specify attributes to be returned
