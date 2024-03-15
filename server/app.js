@@ -31,7 +31,7 @@ app.get('/musicians', async (req, res, next) => {
         query.limit = size;
         query.offset = size * (page - 1);
     }
-    
+
 
     // STEP 1: WHERE clauses on the Musician model
     // ?firstName=XX&lastName=YY
@@ -39,11 +39,15 @@ app.get('/musicians', async (req, res, next) => {
     // End result: { where: { firstName: req.query.firstName } }
 
     // Your code here
-    
+    const firstName = req.query.firstName ? req.query.firstName : null;
+    if (firstName) query.where.firstName = firstName;
+
     // Add keys to the WHERE clause to match the lastName param, if it exists.
     // End result: { where: { lastName: req.query.lastName } }
-    
+
     // Your code here
+    const lastName = req.query.lastName ? req.query.lastName : null
+    if (lastName) query.where.lastName = lastName;
 
 
     // STEP 2: WHERE clauses on the associated Band model
