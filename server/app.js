@@ -148,6 +148,16 @@ app.get('/musicians', async (req, res, next) => {
     // End result: { order: [['firstName', 'asc'], ['lastName'], ['createdAt', 'desc']] }
 
     // Your code here
+    const order = req.query.order ? req.query.order : null;
+    query.order = []
+    if (order) {
+        for (const ordering of order) {
+            query.order.push(ordering.split(','));
+        }
+    } else {
+        query.order.push(['lastName']);
+        query.order.push(['firstName'])
+    }
 
 
     // Perform compiled query
